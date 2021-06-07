@@ -1,5 +1,7 @@
-import statistics
+import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
+import matplotlib as mlt
 
 VNM = pd.read_csv('datas/VNM_STOCK_DATA.csv', encoding='utf8')
 
@@ -26,6 +28,33 @@ VNM.fillna(value=VNM.shift(-1))  # thay thế mising value bằng giá trị g�
 
 # xử lý dữ liệu biên
 
-
 print('.............dữ liệu sau khi làm sạch....................')
 print(VNM)
+
+# xử lý filter dữ liệu theo thời gian
+
+print(VNM.resample(rule='M').mean())  # dữ liệu giá trung bình theo tháng (rule='M' month....)
+print(VNM.resample(rule='M').min())  # dữ liệu giá thấp nhất theo tháng (rule='M' month....)
+print(VNM.resample(rule='M').max())  # dữ liệu giá cao nhất theo tháng (rule='M' month....)
+
+# lấy giá trị trung bình 30 ngày của giá đóng cửa cổ phiểu VNM
+
+VNM['30D-MA'] = VNM['Close'].rolling(window=30).mean()
+print(VNM)
+
+# vẽ biểu đồ cổ phiếu và giá trị trung bình 30 ngày trước đó ở trên
+
+VNM['Close'].plot(figsize=(12, 6), title='Bieu do co phieu VNM')
+VNM['30D-MA'].plot()
+plt.legend()
+plt.show()
+
+# vẽ biểu đồ  bollinger band
+# giá đóng cửa trung bình 20 ngày trước đó
+VNM['20D-MA'] = VNM['Close'].rolling(20).mean()
+# dải băng trên upperband
+VNM['Upperband'] = VNM['20D-MA']+2*(VNM['Close'].rolling(20).std())
+VNM['Lowerband'] = VNM['20D-MA']-2*(VNM['Close'].rolling(20).std())
+
+VNM[['Close','20D-MA','Upperband','Lowerband']].tail(200).plot(figsize=(12,8),title='Bieu do bollinger band')
+plt.show()
