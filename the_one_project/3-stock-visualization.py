@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 
 # tạo và xử lý và làm sạch dữ liệu cổ phiếu VNM
-VNM = pd.read_csv('datas/VNM_STOCK_DATA.csv', encoding='utf8')
+VNM = pd.read_csv('datas/VNM.csv', encoding='utf8')
 VNM.columns = ['Ticker', 'Date', 'Open', 'High', 'Low', 'Close', 'Volume']
 VNM['Date'] = pd.to_datetime(VNM['Date'], format="%Y%m%d")  # format date
 VNM.drop(columns='Ticker', inplace=True)  # drop column

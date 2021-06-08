@@ -1,9 +1,7 @@
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
-import matplotlib as mlt
 
-VNM = pd.read_csv('datas/VNM_STOCK_DATA.csv', encoding='utf8')
+VNM = pd.read_csv('datas/VNM.csv', encoding='utf8')
 
 # thông tin chung
 print('..............thông tin dữ liệu đầu tiên...................')
